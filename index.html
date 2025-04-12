@@ -2,35 +2,44 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jeu concours Barilla</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('https://imagineers.studio/_next/image?url=https%3A%2F%2Fuhygcjmxiifv6kek.public.blob.vercel-storage.com%2Fdiscover-mute-surgery-Clmvh8D3azd7yFo3N8t16du9jtQtws.png&w=640&q=75') no-repeat center center fixed;
+      margin: 0;
+      background: url('https://images.unsplash.com/photo-1589308078054-8324c23669f3?auto=format&fit=crop&w=1400&q=80') no-repeat center center fixed;
       background-size: cover;
       color: #333;
-      text-align: center;
-      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
     }
 
-    #quizForm {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      max-width: 650px;
-      margin: auto;
-    }
-
-    h1 {
-      color: #002f6c;
-      font-size: 2.5em;
-      margin-bottom: 20px;
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.92);
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 600px;
     }
 
     img.logo {
-      max-width: 200px;
-      margin-bottom: 20px;
+      max-width: 180px;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #002f6c;
+      margin-bottom: 25px;
+      text-align: center;
+      font-family: 'Georgia', serif;
+      letter-spacing: 1px;
     }
 
     p {
@@ -39,11 +48,15 @@
       margin-bottom: 10px;
     }
 
-    label, input[type="radio"] {
+    label {
       display: block;
       text-align: left;
-      margin-left: 20px;
+      margin-left: 15px;
       margin-bottom: 5px;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
     }
 
     button {
@@ -52,9 +65,10 @@
       border: none;
       padding: 12px 24px;
       font-size: 1em;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
       margin-top: 20px;
+      width: 100%;
       transition: background-color 0.3s;
     }
 
@@ -62,104 +76,98 @@
       background-color: #a62018;
     }
 
-    /* ✅ Fenêtre modale */
-    .modal {
+    .popup {
       display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.6);
-    }
-
-    .modal-content {
-      background-color: #fff;
-      margin: 15% auto;
-      padding: 30px;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 500px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .close:hover {
-      color: black;
-    }
-
-    .gagnant {
-      font-size: 1.5em;
-      color: #d52b1e;
-      font-weight: bold;
       margin-top: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff5f5;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .popup.success {
+      background-color: #e0f9e0;
+      color: #207520;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.7em;
+      }
+
+      .overlay {
+        padding: 20px 15px;
+      }
+
+      label {
+        margin-left: 10px;
+      }
+
+      button {
+        font-size: 1em;
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Logo Barilla -->
-  <img src="https://logo-marque.com/wp-content/uploads/2022/02/Barilla-Logo-650x366.jpg" class="logo">
+  <div class="overlay">
+    <img src="https://logo-marque.com/wp-content/uploads/2022/02/Barilla-Logo-650x366.jpg" class="logo" alt="Logo Barilla">
 
-  <h1>Jeu concours<br>Quiz Barilla</h1>
+    <h1>🍝 Le Grand Quiz Barilla</h1>
 
-  <form id="quizForm">
+    <form id="quizForm">
 
-    <!-- Question 1 -->
-    <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
-    <label><input type="radio" name="q1" value="une"> une cuillère</label>
-    <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
-    <label><input type="radio" name="q1" value="trois"> trois cuillères</label>
-    <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
-    <label><input type="radio" name="q1" value="pot"> le pot</label>
+      <!-- Question 1 -->
+      <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
+      <label><input type="radio" name="q1" value="une"> une cuillère</label>
+      <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
+      <label><input type="radio" name="q1" value="trois"> trois cuillères</label>
+      <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
+      <label><input type="radio" name="q1" value="pot"> le pot</label>
 
-    <!-- Question 2 -->
-    <p>2. Quand le pesto a-t-il été inventé ?</p>
-    <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
-    <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
-    <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
-    <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
+      <!-- Question 2 -->
+      <p>2. Quand le pesto a-t-il été inventé ?</p>
+      <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
+      <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
+      <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
+      <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
 
-    <!-- Question 3 -->
-    <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
-    <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
-    <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
-    <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
-    <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
+      <!-- Question 3 -->
+      <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
+      <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
+      <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
+      <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
+      <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
 
-    <button type="button" onclick="verifierQuiz()">Soumettre</button>
-  </form>
+      <button type="button" onclick="verifierQuiz()">Soumettre</button>
+    </form>
 
-  <!-- ✅ Modale résultat -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="fermerModal()">&times;</span>
-      <p id="resultat"></p>
-    </div>
+    <div id="popup" class="popup"></div>
   </div>
 
   <script>
     function verifierQuiz() {
       let score = 0;
-      const resultat = document.getElementById("resultat");
+      const popup = document.getElementById("popup");
 
       const reponse1 = document.querySelector('input[name="q1"]:checked');
       const reponse2 = document.querySelector('input[name="q2"]:checked');
       const reponse3 = document.querySelector('input[name="q3"]:checked');
 
       if (!reponse1 || !reponse2 || !reponse3) {
-        resultat.innerHTML = "Merci de répondre à toutes les questions !";
-        document.getElementById("modal").style.display = "block";
+        popup.className = "popup";
+        popup.innerHTML = "Merci de répondre à toutes les questions !";
+        popup.style.display = "block";
         return;
       }
 
@@ -167,28 +175,17 @@
       if (reponse2.value === "1801-1900") score++;
       if (reponse3.value === "des pignons de pin") score++;
 
-      let fautes = 3 - score;
-
-      if (fautes === 0) {
-        resultat.innerHTML = "🎉 Félicitations ! Tu es un(e) vrai(e) chef Barilla ⭐<br>Tu as fait un sans faute !<br><br>Malheureusement tous les lots sont déjà écoulés...<br>Retenter votre chance lors de notre prochain jeu concours !";
+      if (score === 3) {
+        popup.className = "popup success";
+        popup.innerHTML = "🎉 Bravo ! Tu as tout juste !<br>Tu es un(e) vrai(e) maestro de la pasta 🍝";
       } else {
-        resultat.innerHTML = `Tu as fait ${fautes} faute(s) sur 3.`;
+        popup.className = "popup";
+        popup.innerHTML = `Tu as fait ${3 - score} faute(s) sur 3.`;
       }
 
-      document.getElementById("modal").style.display = "block";
-    }
-
-    function fermerModal() {
-      document.getElementById("modal").style.display = "none";
-    }
-
-    // Fermer la modale si on clique en dehors
-    window.onclick = function(event) {
-      const modal = document.getElementById("modal");
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
+      popup.style.display = "block";
     }
   </script>
+
 </body>
 </html>
