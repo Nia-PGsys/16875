@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jeu concours Barilla</title>
   <style>
     body {
@@ -11,20 +11,17 @@
       background: url('https://images.unsplash.com/photo-1589308078054-8324c23669f3?auto=format&fit=crop&w=1400&q=80') no-repeat center center fixed;
       background-size: cover;
       color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
       padding: 20px;
     }
 
     .overlay {
-      background-color: rgba(255, 255, 255, 0.92);
+      background-color: rgba(255, 255, 255, 0.95);
       padding: 30px 20px;
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      width: 100%;
       max-width: 600px;
+      margin: auto;
     }
 
     img.logo {
@@ -36,10 +33,8 @@
     h1 {
       font-size: 2.2em;
       color: #002f6c;
-      margin-bottom: 25px;
       text-align: center;
       font-family: 'Georgia', serif;
-      letter-spacing: 1px;
     }
 
     p {
@@ -76,21 +71,39 @@
       background-color: #a62018;
     }
 
-    .popup {
+    /* Modal styles */
+    .modal-bg {
       display: none;
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 10px;
-      background-color: #fff5f5;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      animation: fadeIn 0.4s ease;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
     }
 
-    .popup.success {
+    .modal {
+      background-color: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.success {
       background-color: #e0f9e0;
       color: #207520;
       font-weight: bold;
+    }
+
+    .modal button {
+      margin-top: 20px;
+      background-color: #333;
     }
 
     @keyframes fadeIn {
@@ -99,22 +112,9 @@
     }
 
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.7em;
-      }
-
-      .overlay {
-        padding: 20px 15px;
-      }
-
-      label {
-        margin-left: 10px;
-      }
-
-      button {
-        font-size: 1em;
-        padding: 10px;
-      }
+      h1 { font-size: 1.7em; }
+      .overlay { padding: 20px 15px; }
+      label { margin-left: 10px; }
     }
   </style>
 </head>
@@ -126,8 +126,6 @@
     <h1>🍝 Le Grand Quiz Barilla</h1>
 
     <form id="quizForm">
-
-      <!-- Question 1 -->
       <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
       <label><input type="radio" name="q1" value="une"> une cuillère</label>
       <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
@@ -135,14 +133,12 @@
       <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
       <label><input type="radio" name="q1" value="pot"> le pot</label>
 
-      <!-- Question 2 -->
       <p>2. Quand le pesto a-t-il été inventé ?</p>
       <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
       <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
       <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
       <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
 
-      <!-- Question 3 -->
       <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
       <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
       <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
@@ -151,41 +147,54 @@
 
       <button type="button" onclick="verifierQuiz()">Soumettre</button>
     </form>
+  </div>
 
-    <div id="popup" class="popup"></div>
+  <!-- Modal -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal" id="modal">
+      <div id="modalContent"></div>
+      <button onclick="fermerPopup()">Fermer</button>
+    </div>
   </div>
 
   <script>
     function verifierQuiz() {
       let score = 0;
-      const popup = document.getElementById("popup");
+      const modalBg = document.getElementById("modalBg");
+      const modal = document.getElementById("modal");
+      const modalContent = document.getElementById("modalContent");
 
-      const reponse1 = document.querySelector('input[name="q1"]:checked');
-      const reponse2 = document.querySelector('input[name="q2"]:checked');
-      const reponse3 = document.querySelector('input[name="q3"]:checked');
+      const r1 = document.querySelector('input[name="q1"]:checked');
+      const r2 = document.querySelector('input[name="q2"]:checked');
+      const r3 = document.querySelector('input[name="q3"]:checked');
 
-      if (!reponse1 || !reponse2 || !reponse3) {
-        popup.className = "popup";
-        popup.innerHTML = "Merci de répondre à toutes les questions !";
-        popup.style.display = "block";
+      if (!r1 || !r2 || !r3) {
+        modal.className = "modal";
+        modalContent.innerHTML = "Merci de répondre à toutes les questions !";
+        modalBg.style.display = "flex";
         return;
       }
 
-      if (reponse1.value === "pot") score++;
-      if (reponse2.value === "1801-1900") score++;
-      if (reponse3.value === "des pignons de pin") score++;
+      if (r1.value === "pot") score++;
+      if (r2.value === "1801-1900") score++;
+      if (r3.value === "des pignons de pin") score++;
 
       if (score === 3) {
-        popup.className = "popup success";
-        popup.innerHTML = "🎉 Bravo ! Tu as tout juste !<br>Tu es un(e) vrai(e) maestro de la pasta 🍝";
+        modal.className = "modal success";
+        modalContent.innerHTML = "🎉 Bravo ! Tu as tout juste !<br>Tu es un(e) vrai(e) maestro de la pasta 🍝";
       } else {
-        popup.className = "popup";
-        popup.innerHTML = `Tu as fait ${3 - score} faute(s) sur 3.`;
+        modal.className = "modal";
+        modalContent.innerHTML = `Tu as fait ${3 - score} faute(s) sur 3.`;
       }
 
-      popup.style.display = "block";
+      modalBg.style.display = "flex";
+    }
+
+    function fermerPopup() {
+      document.getElementById("modalBg").style.display = "none";
     }
   </script>
 
 </body>
 </html>
+
