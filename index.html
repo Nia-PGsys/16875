@@ -2,33 +2,50 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz</title>
+  <title>Quiz Cuisine</title>
 </head>
 <body>
-  <h1>Petit quiz</h1>
-  <p>Quelle est la capitale de la France ?</p>
+  <h1>Quiz sur la cuisine 🍝</h1>
 
   <form id="quizForm">
-    <input type="radio" name="question1" value="Lyon"> Lyon<br>
-    <input type="radio" name="question1" value="Marseille"> Marseille<br>
-    <input type="radio" name="question1" value="Paris"> Paris<br><br>
-    <button type="button" onclick="verifierReponse()">Soumettre</button>
+
+    <!-- Question 1 -->
+    <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
+    <input type="radio" name="q1" value="une"> une cuillère<br>
+    <input type="radio" name="q1" value="deux"> deux cuillères<br>
+    <input type="radio" name="q1" value="trois"> trois cuillères<br>
+    <input type="radio" name="q1" value="quatre"> quatre cuillères<br>
+    <input type="radio" name="q1" value="pot"> le pot<br>
+
+    <!-- Question 2 -->
+    <p>2. Combien de temps faut-il cuire des pâtes en moyenne ?</p>
+    <input type="radio" name="q2" value="3"> 3 minutes<br>
+    <input type="radio" name="q2" value="7-10"> 7 à 10 minutes<br>
+    <input type="radio" name="q2" value="20"> 20 minutes<br>
+    <input type="radio" name="q2" value="60"> 1 heure<br><br>
+
+    <button type="button" onclick="verifierQuiz()">Soumettre</button>
   </form>
 
   <p id="resultat"></p>
 
   <script>
-    function verifierReponse() {
-      const choix = document.querySelector('input[name="question1"]:checked');
-      const resultat = document.getElementById('resultat');
+    function verifierQuiz() {
+      let score = 0;
+      const resultat = document.getElementById("resultat");
 
-      if (!choix) {
-        resultat.textContent = "Choisis une réponse !";
-      } else if (choix.value === "Paris") {
-        resultat.textContent = "Bonne réponse ! 🎉";
-      } else {
-        resultat.textContent = "Mauvaise réponse. 😢";
+      const reponse1 = document.querySelector('input[name="q1"]:checked');
+      const reponse2 = document.querySelector('input[name="q2"]:checked');
+
+      if (!reponse1 || !reponse2) {
+        resultat.textContent = "Merci de répondre à toutes les questions !";
+        return;
       }
+
+      if (reponse1.value === "deux") score++;
+      if (reponse2.value === "7-10") score++;
+
+      resultat.textContent = "Tu as " + score + " bonne(s) réponse(s) sur 2 !";
     }
   </script>
 </body>
