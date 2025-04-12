@@ -1,60 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jeu concours Barilla</title>
+  <meta charset="UTF-8">
+  <title>🎉 Quiz Barilla | Pesto Party</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
+    html, body {
       margin: 0;
-      background: url('https://images.unsplash.com/photo-1617196034493-2e49f5e53931?auto=format&fit=crop&w=1400&q=80') no-repeat center center fixed;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://cdn.pixabay.com/photo/2020/04/15/17/05/spaghetti-5046165_1280.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #333;
-      min-height: 100vh;
-      padding: 20px;
+      text-align: center;
     }
 
-    .overlay {
-      background-color: #ffffff;
-      padding: 30px 20px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      max-width: 600px;
-      margin: auto;
+    header {
+      background-color: rgba(255, 255, 255, 1); /* Logo bien opaque */
+      padding: 20px 0;
     }
 
     img.logo {
-      max-width: 180px;
-      display: block;
-      margin: 0 auto 20px;
-      background-color: white;
-      padding: 10px;
-      border-radius: 10px;
+      max-width: 200px;
     }
 
     h1 {
-      font-size: 2.2em;
       color: #002f6c;
-      text-align: center;
-      font-family: 'Georgia', serif;
+      font-size: 2.7em;
+      margin: 10px auto 25px;
+      text-shadow: 1px 1px 3px white;
+    }
+
+    #quizForm {
+      background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent */
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      max-width: 650px;
+      margin: 30px auto;
     }
 
     p {
       font-weight: bold;
       text-align: left;
-      margin-bottom: 10px;
+      margin: 20px 0 10px;
     }
 
     label {
       display: block;
       text-align: left;
-      margin-left: 15px;
-      margin-bottom: 5px;
-    }
-
-    input[type="radio"] {
-      margin-right: 8px;
+      margin-left: 20px;
+      margin-bottom: 8px;
     }
 
     button {
@@ -63,10 +58,9 @@
       border: none;
       padding: 12px 24px;
       font-size: 1em;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 20px;
-      width: 100%;
+      margin-top: 25px;
       transition: background-color 0.3s;
     }
 
@@ -74,110 +68,95 @@
       background-color: #a62018;
     }
 
-    .modal-bg {
-      display: none;
+    #resultatPopup {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
-      z-index: 10;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background-color: white;
-      padding: 30px 20px;
+      padding: 30px;
       border-radius: 12px;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      animation: fadeIn 0.3s ease;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+      z-index: 999;
+      display: none;
+      max-width: 80%;
     }
 
-    .modal.success {
-      background-color: #e0f9e0;
-      color: #207520;
-      font-weight: bold;
-    }
-
-    .modal button {
+    #closePopup {
+      background-color: #ccc;
+      border: none;
+      padding: 10px 16px;
       margin-top: 20px;
-      background-color: #333;
+      border-radius: 6px;
+      cursor: pointer;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
 
-    @media (max-width: 600px) {
-      h1 { font-size: 1.7em; }
-      .overlay { padding: 20px 15px; }
-      label { margin-left: 10px; }
+      #quizForm {
+        padding: 20px;
+        margin: 20px 10px;
+      }
+
+      label {
+        margin-left: 10px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="overlay">
+  <header>
     <img src="https://logo-marque.com/wp-content/uploads/2022/02/Barilla-Logo-650x366.jpg" class="logo" alt="Logo Barilla">
+  </header>
 
-    <h1>🍝 Le Grand Quiz Barilla</h1>
+  <h1>Quiz Barilla 🍝<br><span style="font-size: 0.6em;">Spécial Pesto Lovers</span></h1>
 
-    <form id="quizForm">
-      <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
-      <label><input type="radio" name="q1" value="une"> une cuillère</label>
-      <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
-      <label><input type="radio" name="q1" value="trois"> trois cuillères</label>
-      <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
-      <label><input type="radio" name="q1" value="pot"> le pot</label>
+  <form id="quizForm">
+    <!-- Question 1 -->
+    <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
+    <label><input type="radio" name="q1" value="une"> une cuillère</label>
+    <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
+    <label><input type="radio" name="q1" value="trois"> trois cuillères</label>
+    <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
+    <label><input type="radio" name="q1" value="pot"> le pot</label>
 
-      <p>2. Quand le pesto a-t-il été inventé ?</p>
-      <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
-      <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
-      <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
-      <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
+    <!-- Question 2 -->
+    <p>2. Quand le pesto a-t-il été inventé ?</p>
+    <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
+    <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
+    <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
+    <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
 
-      <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
-      <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
-      <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
-      <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
-      <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
+    <!-- Question 3 -->
+    <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
+    <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
+    <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
+    <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
+    <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
 
-      <button type="button" onclick="verifierQuiz()">Soumettre</button>
-    </form>
+    <button type="button" onclick="verifierQuiz()">Soumettre</button>
+  </form>
+
+  <div id="resultatPopup">
+    <p id="resultatText"></p>
+    <button id="closePopup" onclick="fermerPopup()">Fermer</button>
   </div>
 
-  <!-- Modal -->
-  <div class="modal-bg" id="modalBg">
-    <div class="modal" id="modal">
-      <div id="modalContent"></div>
-      <button onclick="fermerPopup()">Fermer</button>
-    </div>
-  </div>
-
-  <!-- Sound -->
-  <audio id="soundSuccess" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
-
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
     function verifierQuiz() {
       let score = 0;
-      const modalBg = document.getElementById("modalBg");
-      const modal = document.getElementById("modal");
-      const modalContent = document.getElementById("modalContent");
-      const soundSuccess = document.getElementById("soundSuccess");
 
       const r1 = document.querySelector('input[name="q1"]:checked');
       const r2 = document.querySelector('input[name="q2"]:checked');
       const r3 = document.querySelector('input[name="q3"]:checked');
 
       if (!r1 || !r2 || !r3) {
-        modal.className = "modal";
-        modalContent.innerHTML = "Merci de répondre à toutes les questions !";
-        modalBg.style.display = "flex";
+        alert("Merci de répondre à toutes les questions !");
         return;
       }
 
@@ -185,23 +164,33 @@
       if (r2.value === "1801-1900") score++;
       if (r3.value === "des pignons de pin") score++;
 
-      if (score === 3) {
-        modal.className = "modal success";
-        modalContent.innerHTML = "🎉 Bravo ! Tu as tout juste !<br>Tu es un(e) vrai(e) maestro de la pasta 🍝";
-        soundSuccess.play();
+      const total = 3; // Modifie cette valeur à 10 plus tard
+
+      const resultatText = document.getElementById("resultatText");
+      const popup = document.getElementById("resultatPopup");
+
+      if (score === total) {
+        resultatText.innerHTML = `🎉 Félicitations ! Tu as fait un sans faute !<br>${score}/${total} bonnes réponses.`;
+        lancerConfettis(); // confettis si tout bon
       } else {
-        modal.className = "modal";
-        modalContent.innerHTML = `Tu as fait ${3 - score} faute(s) sur 3.`;
+        resultatText.innerHTML = `Tu as fait ${total - score} faute(s) sur ${total}.`;
       }
 
-      modalBg.style.display = "flex";
+      popup.style.display = "block";
     }
 
     function fermerPopup() {
-      document.getElementById("modalBg").style.display = "none";
+      document.getElementById("resultatPopup").style.display = "none";
+    }
+
+    function lancerConfettis() {
+      confetti({
+        particleCount: 200,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
     }
   </script>
-
 </body>
 </html>
 
