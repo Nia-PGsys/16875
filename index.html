@@ -2,54 +2,54 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>🎉 Quiz Barilla | Pesto Party</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeu concours Barilla</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
+    body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('https://cdn.pixabay.com/photo/2020/04/15/17/05/spaghetti-5046165_1280.jpg') no-repeat center center fixed;
+      margin: 0;
+      background: url('https://images.unsplash.com/photo-1627843240063-fd4d36d6d066?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
       background-size: cover;
-      color: #333;
+      overflow-x: hidden;
+    }
+
+    .blur {
+      filter: blur(5px);
+      pointer-events: none;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.92);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
       text-align: center;
     }
 
-    header {
-      background-color: rgba(255, 255, 255, 1); /* Logo bien opaque */
-      padding: 20px 0;
-    }
-
-    img.logo {
-      max-width: 200px;
+    .logo {
+      max-width: 160px;
+      margin-bottom: 10px;
     }
 
     h1 {
       color: #002f6c;
-      font-size: 2.7em;
-      margin: 10px auto 25px;
-      text-shadow: 1px 1px 3px white;
-    }
-
-    #quizForm {
-      background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent */
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      max-width: 650px;
-      margin: 30px auto;
+      font-size: 2em;
+      margin: 10px 0 20px;
     }
 
     p {
       font-weight: bold;
       text-align: left;
-      margin: 20px 0 10px;
+      margin: 15px 0 5px;
     }
 
     label {
       display: block;
       text-align: left;
       margin-left: 20px;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
 
     button {
@@ -58,9 +58,9 @@
       border: none;
       padding: 12px 24px;
       font-size: 1em;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
-      margin-top: 25px;
+      margin-top: 20px;
       transition: background-color 0.3s;
     }
 
@@ -68,129 +68,138 @@
       background-color: #a62018;
     }
 
-    #resultatPopup {
+    #popup {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: white;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+      max-width: 90%;
       z-index: 999;
       display: none;
-      max-width: 80%;
+      text-align: center;
     }
 
-    #closePopup {
-      background-color: #ccc;
-      border: none;
-      padding: 10px 16px;
-      margin-top: 20px;
-      border-radius: 6px;
-      cursor: pointer;
+    #popup h2 {
+      color: #002f6c;
+      font-size: 1.5em;
     }
 
-    @media (max-width: 768px) {
+    #popup p {
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+        margin: 10px;
+      }
+
       h1 {
-        font-size: 2em;
+        font-size: 1.5em;
       }
 
-      #quizForm {
+      #popup {
         padding: 20px;
-        margin: 20px 10px;
-      }
-
-      label {
-        margin-left: 10px;
       }
     }
   </style>
 </head>
 <body>
-
-  <header>
+  <div id="mainContent" class="container">
     <img src="https://logo-marque.com/wp-content/uploads/2022/02/Barilla-Logo-650x366.jpg" class="logo" alt="Logo Barilla">
-  </header>
+    <h1>Quiz Barilla 🍝</h1>
 
-  <h1>Quiz Barilla 🍝<br><span style="font-size: 0.6em;">Spécial Pesto Lovers</span></h1>
+    <form id="quizForm">
+      <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
+      <label><input type="radio" name="q1" value="une"> une cuillère</label>
+      <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
+      <label><input type="radio" name="q1" value="trois"> trois cuillères</label>
+      <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
+      <label><input type="radio" name="q1" value="pot"> le pot</label>
 
-  <form id="quizForm">
-    <!-- Question 1 -->
-    <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
-    <label><input type="radio" name="q1" value="une"> une cuillère</label>
-    <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
-    <label><input type="radio" name="q1" value="trois"> trois cuillères</label>
-    <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
-    <label><input type="radio" name="q1" value="pot"> le pot</label>
+      <p>2. Quand le pesto a-t-il été inventé ?</p>
+      <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
+      <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
+      <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
+      <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
 
-    <!-- Question 2 -->
-    <p>2. Quand le pesto a-t-il été inventé ?</p>
-    <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
-    <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
-    <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
-    <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
+      <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
+      <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
+      <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
+      <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
+      <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
 
-    <!-- Question 3 -->
-    <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
-    <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
-    <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
-    <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
-    <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
-
-    <button type="button" onclick="verifierQuiz()">Soumettre</button>
-  </form>
-
-  <div id="resultatPopup">
-    <p id="resultatText"></p>
-    <button id="closePopup" onclick="fermerPopup()">Fermer</button>
+      <button type="button" onclick="verifierQuiz()">Soumettre</button>
+    </form>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <div id="popup">
+    <h2 id="titreResultat"></h2>
+    <p id="texteResultat"></p>
+    <button onclick="fermerPopup()">Fermer</button>
+  </div>
+
+  <!-- Confettis -->
+  <canvas id="confetti-canvas" style="position:fixed;pointer-events:none;top:0;left:0;width:100%;height:100%;z-index:998;"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script>
     function verifierQuiz() {
+      const main = document.getElementById("mainContent");
+      const titre = document.getElementById("titreResultat");
+      const texte = document.getElementById("texteResultat");
+      const popup = document.getElementById("popup");
+
       let score = 0;
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      const q3 = document.querySelector('input[name="q3"]:checked');
 
-      const r1 = document.querySelector('input[name="q1"]:checked');
-      const r2 = document.querySelector('input[name="q2"]:checked');
-      const r3 = document.querySelector('input[name="q3"]:checked');
-
-      if (!r1 || !r2 || !r3) {
-        alert("Merci de répondre à toutes les questions !");
+      if (!q1 || !q2 || !q3) {
+        titre.textContent = "Oups !";
+        texte.textContent = "Merci de répondre à toutes les questions.";
+        afficherPopup();
         return;
       }
 
-      if (r1.value === "pot") score++;
-      if (r2.value === "1801-1900") score++;
-      if (r3.value === "des pignons de pin") score++;
+      if (q1.value === "pot") score++;
+      if (q2.value === "1801-1900") score++;
+      if (q3.value === "des pignons de pin") score++;
 
-      const total = 3; // Modifie cette valeur à 10 plus tard
-
-      const resultatText = document.getElementById("resultatText");
-      const popup = document.getElementById("resultatPopup");
-
-      if (score === total) {
-        resultatText.innerHTML = `🎉 Félicitations ! Tu as fait un sans faute !<br>${score}/${total} bonnes réponses.`;
-        lancerConfettis(); // confettis si tout bon
+      if (score === 3) {
+        titre.textContent = "🎉 Félicitations !";
+        texte.textContent = "Tu as fait un sans faute ! Tu es un(e) vrai(e) chef Barilla 🌟";
+        afficherPopup();
+        lancerConfettis();
       } else {
-        resultatText.innerHTML = `Tu as fait ${total - score} faute(s) sur ${total}.`;
+        titre.textContent = "Résultat";
+        texte.textContent = `Tu as ${3 - score} faute(s) sur 3 questions.`;
+        afficherPopup();
       }
+    }
 
-      popup.style.display = "block";
+    function afficherPopup() {
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("mainContent").classList.add("blur");
     }
 
     function fermerPopup() {
-      document.getElementById("resultatPopup").style.display = "none";
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("mainContent").classList.remove("blur");
     }
 
     function lancerConfettis() {
       confetti({
-        particleCount: 200,
-        spread: 90,
+        particleCount: 100,
+        spread: 70,
         origin: { y: 0.6 }
       });
     }
   </script>
 </body>
 </html>
-
