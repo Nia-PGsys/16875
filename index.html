@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz</title>
+</head>
+<body>
+  <h1>Petit quiz</h1>
+  <p>Quelle est la capitale de la France ?</p>
+
+  <form id="quizForm">
+    <input type="radio" name="question1" value="Lyon"> Lyon<br>
+    <input type="radio" name="question1" value="Marseille"> Marseille<br>
+    <input type="radio" name="question1" value="Paris"> Paris<br><br>
+    <button type="button" onclick="verifierReponse()">Soumettre</button>
+  </form>
+
+  <p id="resultat"></p>
+
+  <script>
+    function verifierReponse() {
+      const choix = document.querySelector('input[name="question1"]:checked');
+      const resultat = document.getElementById('resultat');
+
+      if (!choix) {
+        resultat.textContent = "Choisis une réponse !";
+      } else if (choix.value === "Paris") {
+        resultat.textContent = "Bonne réponse ! 🎉";
+      } else {
+        resultat.textContent = "Mauvaise réponse. 😢";
+      }
+    }
+  </script>
+</body>
+</html>
