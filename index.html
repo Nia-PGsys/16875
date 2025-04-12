@@ -2,34 +2,110 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Jeu concour Barilla</title>
+  <title>Jeu concours Barilla</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1603133872878-684f208fb0b2?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      text-align: center;
+      padding: 30px;
+    }
+
+    #quizForm {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      max-width: 650px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #002f6c;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    img.logo {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-weight: bold;
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    label, input[type="radio"] {
+      display: block;
+      text-align: left;
+      margin-left: 20px;
+      margin-bottom: 5px;
+    }
+
+    button {
+      background-color: #d52b1e;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a62018;
+    }
+
+    #resultat {
+      font-size: 1.3em;
+      margin-top: 25px;
+      color: #002f6c;
+    }
+
+    .gagnant {
+      font-size: 1.5em;
+      color: #d52b1e;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Quiz Barilla</h1>
+
+  <!-- Logo Barilla -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Barilla_logo_2014.svg/2560px-Barilla_logo_2014.svg.png" alt="Logo Barilla" class="logo">
+
+  <h1>Quiz Barilla 🍝</h1>
 
   <form id="quizForm">
 
     <!-- Question 1 -->
     <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
-    <input type="radio" name="q1" value="une"> une cuillère<br>
-    <input type="radio" name="q1" value="deux"> deux cuillères<br>
-    <input type="radio" name="q1" value="trois"> trois cuillères<br>
-    <input type="radio" name="q1" value="quatre"> quatre cuillères<br>
-    <input type="radio" name="q1" value="pot"> le pot<br>
+    <label><input type="radio" name="q1" value="une"> une cuillère</label>
+    <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
+    <label><input type="radio" name="q1" value="trois"> trois cuillères</label>
+    <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
+    <label><input type="radio" name="q1" value="pot"> le pot</label>
 
     <!-- Question 2 -->
-    <p>2. Quand le pesto est t'il inventé ?</p>
-    <input type="radio" name="q2" value="1601-1700"> 1601-1700<br>
-    <input type="radio" name="q2" value="1701-1800"> 1701-1800<br>
-    <input type="radio" name="q2" value="1801-1900"> 1801-1900<br>
-    <input type="radio" name="q2" value="1901-2000"> 1901-2000<br><br>
+    <p>2. Quand le pesto a-t-il été inventé ?</p>
+    <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
+    <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
+    <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
+    <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
 
     <!-- Question 3 -->
-        <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
-    <input type="radio" name="q3" value="de la féta"> de la féta<br>
-    <input type="radio" name="q3" value="des pignons de pin"> des pignons de pin<br>
-    <input type="radio" name="q3" value="des olives vertes"> des olives vertes<br>
-    <input type="radio" name="q3" value="des noisettes"> des noisettes<br><br>
+    <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
+    <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
+    <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
+    <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
+    <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
 
     <button type="button" onclick="verifierQuiz()">Soumettre</button>
   </form>
@@ -54,7 +130,17 @@
       if (reponse2.value === "1801-1900") score++;
       if (reponse3.value === "des pignons de pin") score++;
 
-      resultat.textContent = "Tu as " + score + " bonne(s) réponse(s) sur 3 !";
+      if (score === 3) {
+        resultat.innerHTML = "🎉 Bravo ! Tu es un(e) vrai(e) chef Barilla ⭐<br>Tu as fait un sans faute !";
+        resultat.classList.add("gagnant");
+      } else {
+        resultat.classList.remove("gagnant");
+        resultat.innerHTML = "Tu as " + score + " bonne(s) réponse(s) sur 3.<br>";
+
+        if (reponse1.value !== "pot") resultat.innerHTML += "→ Q1 : la bonne réponse était 'le pot'<br>";
+        if (reponse2.value !== "1801-1900") resultat.innerHTML += "→ Q2 : la bonne réponse était '1801-1900'<br>";
+        if (reponse3.value !== "des pignons de pin") resultat.innerHTML += "→ Q3 : la bonne réponse était 'des pignons de pin'<br>";
+      }
     }
   </script>
 </body>
