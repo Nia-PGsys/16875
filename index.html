@@ -134,6 +134,33 @@
       <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
       <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
 
+      <p>4. Quand se déroule la journée mondiale du pesto ?</p>
+      <label><input type="radio" name="q4" value="29 août"> 29 août</label>
+      <label><input type="radio" name="q4" value="8 janvier"> 8 janvier</label>
+      <label><input type="radio" name="q4" value="17 mars"> 17 mars</label>
+      <label><input type="radio" name="q4" value="2 novembre"> 2 novembre</label>
+
+      <p>5. Quel est l'équivalent français du pesto ?</p>
+      <label><input type="radio" name="q5" value="le festo"> le festo</label>
+      <label><input type="radio" name="q5" value="le pistou"> le pistou</label>
+      <label><input type="radio" name="q5" value="le pasto"> le pasto</label>
+      <label><input type="radio" name="q5" value="le misou"> le misou</label>
+
+      <p>6. Quelle variante du basilic dans le pesto n'existe pas ?</p>
+      <label><input type="radio" name="q6" value="fenouil"> fenouil</label>
+      <label><input type="radio" name="q6" value="épinard"> épinard</label>
+      <label><input type="radio" name="q6" value="pissenlits"> pissenlits</label>
+      <label><input type="radio" name="q6" value="betterave"> betterave</label>
+      <label><input type="radio" name="q6" value="câpre"> câpre</label>
+      <label><input type="radio" name="q6" value="tout existe"> tout a déjà été fait, le pesto c'est magique</label>
+
+      <p>7. De quelle couleur est le basilic nommé Dark Opal ?</p>
+      <label><input type="radio" name="q7" value="bleu foncé"> bleu foncé</label>
+      <label><input type="radio" name="q7" value="rouge foncé"> rouge foncé</label>
+      <label><input type="radio" name="q7" value="violet foncé"> violet foncé</label>
+      <label><input type="radio" name="q7" value="orange foncé"> orange foncé</label>
+      <label><input type="radio" name="q7" value="cette variété n'existe pas"> cette variété n'existe pas</label>
+
       <button type="button" onclick="verifierQuiz()">Soumettre</button>
     </form>
   </div>
@@ -144,7 +171,6 @@
     <button onclick="fermerPopup()">Fermer</button>
   </div>
 
-  <!-- Confettis -->
   <canvas id="confetti-canvas" style="position:fixed;pointer-events:none;top:0;left:0;width:100%;height:100%;z-index:998;"></canvas>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -156,29 +182,40 @@
       const popup = document.getElementById("popup");
 
       let score = 0;
-      const q1 = document.querySelector('input[name="q1"]:checked');
-      const q2 = document.querySelector('input[name="q2"]:checked');
-      const q3 = document.querySelector('input[name="q3"]:checked');
 
-      if (!q1 || !q2 || !q3) {
-        titre.textContent = "Oups !";
-        texte.textContent = "Merci de répondre à toutes les questions.";
-        afficherPopup();
-        return;
+      const reponses = {
+        q1: "pot",
+        q2: "1801-1900",
+        q3: "des pignons de pin",
+        q4: "17 mars",
+        q5: "le pistou",
+        q6: "tout existe",
+        q7: "violet foncé"
+      };
+
+      let totalQuestions = Object.keys(reponses).length;
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const question = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!question) {
+          titre.textContent = "Oups !";
+          texte.textContent = "Merci de répondre à toutes les questions.";
+          afficherPopup();
+          return;
+        }
+        if (question.value === reponses[`q${i}`]) {
+          score++;
+        }
       }
 
-      if (q1.value === "pot") score++;
-      if (q2.value === "1801-1900") score++;
-      if (q3.value === "des pignons de pin") score++;
-
-      if (score === 3) {
+      if (score === totalQuestions) {
         titre.textContent = "🎉 Félicitations !";
-        texte.textContent = "Tu as fait un sans faute !<br>Tu es une vraie fan de pesto ! 🌟<br>Malheureusement tous les lots sont épuisés<br>Retenter votre chance lors de notre prochain concours !";
+        texte.innerHTML = "Tu as fait un sans faute !<br>Tu es une vraie fan de pesto ! 🌟<br>Malheureusement tous les lots sont épuisés.<br>Retente ta chance lors de notre prochain concours !";
         afficherPopup();
         lancerConfettis();
       } else {
         titre.textContent = "Résultat";
-        texte.textContent = `Tu as ${3 - score} faute(s) sur 3 questions.`;
+        texte.textContent = `Tu as ${totalQuestions - score} faute(s) sur ${totalQuestions} questions.`;
         afficherPopup();
       }
     }
@@ -203,3 +240,4 @@
   </script>
 </body>
 </html>
+
