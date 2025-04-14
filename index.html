@@ -31,6 +31,12 @@
       color: #2e7d32;
     }
 
+    p {
+      font-weight: bold;
+      text-align: left;
+      margin: 15px 0 5px;
+    }
+
     .question {
       display: none;
       opacity: 0;
@@ -52,6 +58,42 @@
       width: 100%;
       max-width: 500px;
       text-align: left;
+    }
+
+        label {
+      display: block;
+      text-align: left;
+      margin-left: 20px;
+      margin-bottom: 5px;
+    }
+
+      #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      max-width: 90%;
+      z-index: 999;
+      display: none;
+      text-align: center;
+    }
+
+        #popup {
+        padding: 20px;
+      }
+
+    #popup h2 {
+      color: #002f6c;
+      font-size: 1.5em;
+    }
+
+    #popup p {
+      font-size: 1.2em;
+      color: #333;
     }
 
     button {
