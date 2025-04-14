@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jeu concours Barilla</title>
   <style>
     body {
@@ -10,16 +10,22 @@
       margin: 0;
       background: url('https://images.unsplash.com/photo-1627843240063-fd4d36d6d066?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
       background-size: cover;
+      overflow-x: hidden;
+    }
+
+    .blur {
+      filter: blur(5px);
+      pointer-events: none;
     }
 
     .container {
       background-color: rgba(255, 255, 255, 0.92);
       border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       max-width: 600px;
       margin: 30px auto;
       padding: 20px;
       text-align: center;
-      position: relative;
     }
 
     .logo {
@@ -30,75 +36,61 @@
     h1 {
       color: #002f6c;
       font-size: 2em;
+      margin: 10px 0 20px;
     }
 
-    .question {
-      display: none;
-      opacity: 0;
-      animation: fadeIn 0.6s forwards;
-    }
-
-    .question.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+    p {
+      font-weight: bold;
+      text-align: left;
+      margin: 15px 0 5px;
     }
 
     label {
       display: block;
       text-align: left;
-      margin: 10px 0;
+      margin-left: 20px;
+      margin-bottom: 5px;
     }
 
     button {
       background-color: #d52b1e;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 12px 24px;
       font-size: 1em;
       border-radius: 5px;
       cursor: pointer;
       margin-top: 20px;
+      transition: background-color 0.3s;
     }
 
-    #progressContainer {
-      margin: 20px auto;
-      width: 80px;
-      height: 80px;
-      position: relative;
+    button:hover {
+      background-color: #a62018;
     }
 
-    #progressCircle {
-      transform: rotate(-90deg);
-    }
-
-    #progressText {
-      position: absolute;
+    #popup {
+      position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-weight: bold;
-      color: #002f6c;
-    }
-
-    #resultContainer {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      max-width: 90%;
+      z-index: 999;
       display: none;
       text-align: center;
-      padding: 20px;
     }
 
-    #confetti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
+    #popup h2 {
+      color: #002f6c;
+      font-size: 1.5em;
+    }
+
+    #popup p {
+      font-size: 1.2em;
+      color: #333;
     }
 
     @media (max-width: 600px) {
@@ -106,25 +98,23 @@
         padding: 15px;
         margin: 10px;
       }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      #popup {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <canvas id="confetti"></canvas>
-  <div class="container">
-    <img src="https://logo-marque.com/wp-content/uploads/2022/02/Barilla-Logo-650x366.jpg" class="logo" alt="Logo Barilla" />
+  <div id="mainContent" class="container">
+    <img src="https://logo-marque.com/wp-content/uploads/2022/02/Barilla-Logo-650x366.jpg" class="logo" alt="Logo Barilla">
     <h1>Quiz Barilla 🍝<br>Pesto Party</h1>
 
-    <div id="progressContainer">
-      <svg width="80" height="80">
-        <circle cx="40" cy="40" r="35" stroke="#ddd" stroke-width="7" fill="none" />
-        <circle id="progressCircle" cx="40" cy="40" r="35" stroke="#002f6c" stroke-width="7" fill="none" stroke-dasharray="219.91" stroke-dashoffset="219.91" />
-      </svg>
-      <div id="progressText">1 / 7</div>
-    </div>
-
     <form id="quizForm">
-      
       <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
       <label><input type="radio" name="q1" value="une"> une cuillère</label>
       <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
@@ -162,80 +152,91 @@
       <label><input type="radio" name="q6" value="pissenlits"> pissenlits</label>
       <label><input type="radio" name="q6" value="betterave"> betterave</label>
       <label><input type="radio" name="q6" value="câpre"> câpre</label>
-      <label><input type="radio" name="q6" value="tout existe"> tout a déjà été fait, le pesto c'est magique</label><!-- questions ici, inchangées -->
-      <!-- ... (insère toutes tes questions ici comme dans la version précédente) ... -->
-      <div class="question">
-        <p>7. De quelle couleur est le basilic nommé Dark Opal ?</p>
-        <label><input type="radio" name="q7" value="bleu"> bleu foncé</label>
-        <label><input type="radio" name="q7" value="rouge"> rouge foncé</label>
-        <label><input type="radio" name="q7" value="violet"> violet foncé</label>
-        <label><input type="radio" name="q7" value="orange"> orange foncé</label>
-        <label><input type="radio" name="q7" value="pas de variété"> cette variété n’existe pas</label>
-      </div>
+      <label><input type="radio" name="q6" value="tout existe"> tout a déjà été fait, le pesto c'est magique</label>
 
-      <button type="button" onclick="suivanteQuestion()">Suivant</button>
+      <p>7. De quelle couleur est le basilic nommé Dark Opal ?</p>
+      <label><input type="radio" name="q7" value="bleu foncé"> bleu foncé</label>
+      <label><input type="radio" name="q7" value="rouge foncé"> rouge foncé</label>
+      <label><input type="radio" name="q7" value="violet foncé"> violet foncé</label>
+      <label><input type="radio" name="q7" value="orange foncé"> orange foncé</label>
+      <label><input type="radio" name="q7" value="cette variété n'existe pas"> cette variété n'existe pas</label>
+
+      <button type="button" onclick="verifierQuiz()">Soumettre</button>
     </form>
-
-    <div id="resultContainer">
-      <h2>🎉 Bravo !</h2>
-      <p id="scoreText"></p>
-      <button onclick="location.reload()">Rejouer</button>
-    </div>
   </div>
 
+  <div id="popup">
+    <h2 id="titreResultat"></h2>
+    <p id="texteResultat"></p>
+    <button onclick="fermerPopup()">Fermer</button>
+  </div>
+
+  <canvas id="confetti-canvas" style="position:fixed;pointer-events:none;top:0;left:0;width:100%;height:100%;z-index:998;"></canvas>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script>
-    let questionIndex = 0;
-    const questions = document.querySelectorAll('.question');
-    const progressText = document.getElementById('progressText');
-    const progressCircle = document.getElementById('progressCircle');
-    const total = questions.length;
-    const quizForm = document.getElementById('quizForm');
-    const resultContainer = document.getElementById('resultContainer');
-    const scoreText = document.getElementById('scoreText');
+    function verifierQuiz() {
+      const main = document.getElementById("mainContent");
+      const titre = document.getElementById("titreResultat");
+      const texte = document.getElementById("texteResultat");
+      const popup = document.getElementById("popup");
 
-    function suivanteQuestion() {
-      const current = questions[questionIndex];
-      const checked = current.querySelector('input[type="radio"]:checked');
+      let score = 0;
 
-      if (!checked) {
-        alert("Merci de répondre à la question !");
-        return;
+      const reponses = {
+        q1: "pot",
+        q2: "1801-1900",
+        q3: "des pignons de pin",
+        q4: "17 mars",
+        q5: "le pistou",
+        q6: "tout existe",
+        q7: "violet foncé"
+      };
+
+      let totalQuestions = Object.keys(reponses).length;
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const question = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!question) {
+          titre.textContent = "Oups !";
+          texte.textContent = "Merci de répondre à toutes les questions.";
+          afficherPopup();
+          return;
+        }
+        if (question.value === reponses[`q${i}`]) {
+          score++;
+        }
       }
 
-      current.classList.remove('active');
-      questionIndex++;
-
-      if (questionIndex < total) {
-        questions[questionIndex].classList.add('active');
-        updateProgress();
+      if (score === totalQuestions) {
+        titre.textContent = "🎉 Félicitations !";
+        texte.innerHTML = "Tu as fait un sans faute !<br>Tu es une vraie fan de pesto ! 🌟<br>Malheureusement tous les lots sont épuisés.<br>Retente ta chance lors de notre prochain concours !";
+        afficherPopup();
+        lancerConfettis();
       } else {
-        showResult();
+        titre.textContent = "Résultat";
+        texte.textContent = `Tu as ${totalQuestions - score} faute(s) sur ${totalQuestions} questions.`;
+        afficherPopup();
       }
     }
 
-    function updateProgress() {
-      const percent = ((questionIndex + 1) / total) * 100;
-      const dashoffset = 219.91 * (1 - percent / 100);
-      progressCircle.style.strokeDashoffset = dashoffset;
-      progressText.textContent = `${questionIndex + 1} / ${total}`;
+    function afficherPopup() {
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("mainContent").classList.add("blur");
     }
 
-    function showResult() {
-      quizForm.style.display = "none";
-      resultContainer.style.display = "block";
-      const score = Array.from(quizForm.querySelectorAll('input[type="radio"]:checked')).length;
-      scoreText.textContent = `Tu as répondu à ${score} question(s) sur ${total} !`;
+    function fermerPopup() {
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("mainContent").classList.remove("blur");
+    }
+
+    function lancerConfettis() {
       confetti({
-        particleCount: 150,
-        spread: 80,
-        origin: { y: 0.6 },
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
       });
     }
-
-    // Initialisation
-    questions[0].classList.add('active');
-    updateProgress();
   </script>
 </body>
 </html>
