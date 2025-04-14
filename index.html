@@ -2,9 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz Pesto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeu concours Barilla</title>
   <style>
-        body {
+    body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       background: url('https://images.unsplash.com/photo-1627843240063-fd4d36d6d066?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
@@ -27,8 +28,15 @@
       text-align: center;
     }
 
+    .logo {
+      max-width: 160px;
+      margin-bottom: 10px;
+    }
+
     h1 {
-      color: #2e7d32;
+      color: #002f6c;
+      font-size: 2em;
+      margin: 10px 0 20px;
     }
 
     p {
@@ -37,37 +45,30 @@
       margin: 15px 0 5px;
     }
 
-    .question {
-      display: none;
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-
-    .question.active {
-      display: block;
-      opacity: 1;
-    }
-
-    .progress-circle {
-      margin: 1rem auto;
-      width: 100px;
-      height: 100px;
-    }
-
-    #quizForm {
-      width: 100%;
-      max-width: 500px;
-      text-align: left;
-    }
-
-        label {
+    label {
       display: block;
       text-align: left;
       margin-left: 20px;
       margin-bottom: 5px;
     }
 
-      #popup {
+    button {
+      background-color: #d52b1e;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a62018;
+    }
+
+    #popup {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -82,10 +83,6 @@
       text-align: center;
     }
 
-        #popup {
-        padding: 20px;
-      }
-
     #popup h2 {
       color: #002f6c;
       font-size: 1.5em;
@@ -96,167 +93,151 @@
       color: #333;
     }
 
-    button {
-      margin-top: 1rem;
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      background-color: #81c784;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+        margin: 10px;
+      }
 
-    #resultat {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      color: #2e7d32;
+      h1 {
+        font-size: 1.5em;
+      }
+
+      #popup {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Quiz Pesto</h1>
+  <div id="mainContent" class="container">
+    <img src="https://logo-marque.com/wp-content/uploads/2022/02/Barilla-Logo-650x366.jpg" class="logo" alt="Logo Barilla">
+    <h1>Quiz Barilla 🍝<br>Pesto Party</h1>
 
-  <div class="progress-circle">
-    <svg width="100" height="100">
-      <circle cx="50" cy="50" r="45" stroke="#c8e6c9" stroke-width="10" fill="none"/>
-      <circle id="progress" cx="50" cy="50" r="45" stroke="#388e3c" stroke-width="10" fill="none"
-              stroke-dasharray="282.6" stroke-dashoffset="282.6"
-              transform="rotate(-90 50 50)"/>
-    </svg>
+    <form id="quizForm">
+      <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
+      <label><input type="radio" name="q1" value="une"> une cuillère</label>
+      <label><input type="radio" name="q1" value="deux"> deux cuillères</label>
+      <label><input type="radio" name="q1" value="trois"> trois cuillères</label>
+      <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label>
+      <label><input type="radio" name="q1" value="pot"> le pot</label>
+
+      <p>2. Quand le pesto a-t-il été inventé ?</p>
+      <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label>
+      <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label>
+      <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label>
+      <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
+
+      <p>3. Quel est l'ingrédient inattendu du pesto originel ?</p>
+      <label><input type="radio" name="q3" value="de la féta"> de la féta</label>
+      <label><input type="radio" name="q3" value="des pignons de pin"> des pignons de pin</label>
+      <label><input type="radio" name="q3" value="des olives vertes"> des olives vertes</label>
+      <label><input type="radio" name="q3" value="des noisettes"> des noisettes</label>
+
+      <p>4. Quand se déroule la journée mondiale du pesto ?</p>
+      <label><input type="radio" name="q4" value="29 août"> 29 août</label>
+      <label><input type="radio" name="q4" value="8 janvier"> 8 janvier</label>
+      <label><input type="radio" name="q4" value="17 mars"> 17 mars</label>
+      <label><input type="radio" name="q4" value="2 novembre"> 2 novembre</label>
+
+      <p>5. Quel est l'équivalent français du pesto ?</p>
+      <label><input type="radio" name="q5" value="le festo"> le festo</label>
+      <label><input type="radio" name="q5" value="le pistou"> le pistou</label>
+      <label><input type="radio" name="q5" value="le pasto"> le pasto</label>
+      <label><input type="radio" name="q5" value="le misou"> le misou</label>
+
+      <p>6. Quelle variante du basilic dans le pesto n'existe pas ?</p>
+      <label><input type="radio" name="q6" value="fenouil"> fenouil</label>
+      <label><input type="radio" name="q6" value="épinard"> épinard</label>
+      <label><input type="radio" name="q6" value="pissenlits"> pissenlits</label>
+      <label><input type="radio" name="q6" value="betterave"> betterave</label>
+      <label><input type="radio" name="q6" value="câpre"> câpre</label>
+      <label><input type="radio" name="q6" value="tout existe"> tout a déjà été fait, le pesto c'est magique</label>
+
+      <p>7. De quelle couleur est le basilic nommé Dark Opal ?</p>
+      <label><input type="radio" name="q7" value="bleu foncé"> bleu foncé</label>
+      <label><input type="radio" name="q7" value="rouge foncé"> rouge foncé</label>
+      <label><input type="radio" name="q7" value="violet foncé"> violet foncé</label>
+      <label><input type="radio" name="q7" value="orange foncé"> orange foncé</label>
+      <label><input type="radio" name="q7" value="cette variété n'existe pas"> cette variété n'existe pas</label>
+
+      <button type="button" onclick="verifierQuiz()">Soumettre</button>
+    </form>
   </div>
 
-  <form id="quizForm">
-    <!-- 7 questions -->
-    <div class="question active">
-      <p>1. Quelle quantité de pesto doit-on mettre pour une assiette de pâtes ?</p>
-      <label><input type="radio" name="q1" value="une"> une cuillère</label><br>
-      <label><input type="radio" name="q1" value="deux"> deux cuillères</label><br>
-      <label><input type="radio" name="q1" value="trois"> trois cuillères</label><br>
-      <label><input type="radio" name="q1" value="quatre"> quatre cuillères</label><br>
-      <label><input type="radio" name="q1" value="pot"> le pot</label>
-    </div>
+  <div id="popup">
+    <h2 id="titreResultat"></h2>
+    <p id="texteResultat"></p>
+    <button onclick="fermerPopup()">Fermer</button>
+  </div>
 
-    <div class="question">
-      <p>2. Quand le pesto a-t-il été inventé ?</p>
-      <label><input type="radio" name="q2" value="1601-1700"> 1601-1700</label><br>
-      <label><input type="radio" name="q2" value="1701-1800"> 1701-1800</label><br>
-      <label><input type="radio" name="q2" value="1801-1900"> 1801-1900</label><br>
-      <label><input type="radio" name="q2" value="1901-2000"> 1901-2000</label>
-    </div>
-
-    <div class="question">
-      <p>3. Quelle herbe est l’ingrédient principal du pesto ?</p>
-      <label><input type="radio" name="q3" value="menthe"> menthe</label><br>
-      <label><input type="radio" name="q3" value="basilic"> basilic</label><br>
-      <label><input type="radio" name="q3" value="persil"> persil</label><br>
-      <label><input type="radio" name="q3" value="coriandre"> coriandre</label>
-    </div>
-
-    <div class="question">
-      <p>4. Quelle couleur est associée au pesto traditionnel ?</p>
-      <label><input type="radio" name="q4" value="rouge"> rouge</label><br>
-      <label><input type="radio" name="q4" value="jaune"> jaune</label><br>
-      <label><input type="radio" name="q4" value="vert"> vert</label><br>
-      <label><input type="radio" name="q4" value="blanc"> blanc</label>
-    </div>
-
-    <div class="question">
-      <p>5. Quel fromage est souvent utilisé dans le pesto ?</p>
-      <label><input type="radio" name="q5" value="emmental"> emmental</label><br>
-      <label><input type="radio" name="q5" value="parmesan"> parmesan</label><br>
-      <label><input type="radio" name="q5" value="brie"> brie</label><br>
-      <label><input type="radio" name="q5" value="camembert"> camembert</label>
-    </div>
-
-    <div class="question">
-      <p>6. Quelle pâte accompagne traditionnellement le pesto ?</p>
-      <label><input type="radio" name="q6" value="penne"> penne</label><br>
-      <label><input type="radio" name="q6" value="linguine"> linguine</label><br>
-      <label><input type="radio" name="q6" value="spaghetti"> spaghetti</label><br>
-      <label><input type="radio" name="q6" value="trofie"> trofie</label>
-    </div>
-
-    <div class="question">
-      <p>7. Quelle huile est utilisée dans le pesto ?</p>
-      <label><input type="radio" name="q7" value="huile de tournesol"> huile de tournesol</label><br>
-      <label><input type="radio" name="q7" value="huile de palme"> huile de palme</label><br>
-      <label><input type="radio" name="q7" value="huile d’olive"> huile d’olive</label><br>
-      <label><input type="radio" name="q7" value="huile de coco"> huile de coco</label>
-    </div>
-
-    <button type="button" onclick="suivant()" id="nextBtn">Suivant</button>
-    <button type="button" onclick="verifierQuiz()" style="display:none;" id="submitBtn">Soumettre</button>
-  </form>
-
-  <div id="resultat"></div>
+  <canvas id="confetti-canvas" style="position:fixed;pointer-events:none;top:0;left:0;width:100%;height:100%;z-index:998;"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
-    let questionActuelle = 0;
-    const questions = document.querySelectorAll('.question');
-    const progress = document.getElementById('progress');
-
-    function mettreAJourProgression() {
-      const pourcentage = ((questionActuelle) / questions.length) * 100;
-      const offset = 282.6 - (282.6 * pourcentage / 100);
-      progress.style.strokeDashoffset = offset;
-    }
-
-    function suivant() {
-      if (questionActuelle < questions.length - 1) {
-        questions[questionActuelle].classList.remove('active');
-        questionActuelle++;
-        questions[questionActuelle].classList.add('active');
-        mettreAJourProgression();
-        if (questionActuelle === questions.length - 1) {
-          document.getElementById("nextBtn").style.display = "none";
-          document.getElementById("submitBtn").style.display = "inline-block";
-        }
-      }
-    }
-
     function verifierQuiz() {
+      const main = document.getElementById("mainContent");
+      const titre = document.getElementById("titreResultat");
+      const texte = document.getElementById("texteResultat");
+      const popup = document.getElementById("popup");
+
+      let score = 0;
+
       const reponses = {
         q1: "pot",
         q2: "1801-1900",
-        q3: "basilic",
-        q4: "vert",
-        q5: "parmesan",
-        q6: "trofie",
-        q7: "huile d’olive"
+        q3: "des pignons de pin",
+        q4: "17 mars",
+        q5: "le pistou",
+        q6: "tout existe",
+        q7: "violet foncé"
       };
 
-      let score = 0;
-      for (const q in reponses) {
-        const choix = document.querySelector(`input[name="${q}"]:checked`);
-        if (choix && choix.value === reponses[q]) {
+      let totalQuestions = Object.keys(reponses).length;
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const question = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!question) {
+          titre.textContent = "Oups !";
+          texte.textContent = "Merci de répondre à toutes les questions.";
+          afficherPopup();
+          return;
+        }
+        if (question.value === reponses[`q${i}`]) {
           score++;
         }
       }
 
-      document.getElementById("resultat").textContent = `Tu as obtenu ${score} / 7 🎉`;
-
-      if (score === 7) {
-        // confettis 🎊
-        confetti();
+      if (score === totalQuestions) {
+        titre.textContent = "🎉 Félicitations !";
+        texte.innerHTML = "Tu as fait un sans faute !<br>Tu es une vraie fan de pesto ! 🌟<br>Malheureusement tous les lots sont épuisés.<br>Retente ta chance lors de notre prochain concours !";
+        afficherPopup();
+        lancerConfettis();
+      } else {
+        titre.textContent = "Résultat";
+        texte.textContent = `Tu as ${totalQuestions - score} faute(s) sur ${totalQuestions} questions.`;
+        afficherPopup();
       }
     }
 
-    // Confetti animation
-    function confetti() {
-      for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.textContent = '🎉';
-        confetti.style.position = 'absolute';
-        confetti.style.left = Math.random() * window.innerWidth + 'px';
-        confetti.style.top = Math.random() * window.innerHeight + 'px';
-        confetti.style.fontSize = Math.random() * 24 + 12 + 'px';
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 2000);
-      }
+    function afficherPopup() {
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("mainContent").classList.add("blur");
     }
 
-    mettreAJourProgression();
+    function fermerPopup() {
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("mainContent").classList.remove("blur");
+    }
+
+    function lancerConfettis() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
   </script>
 </body>
 </html>
+
