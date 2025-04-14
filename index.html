@@ -213,9 +213,11 @@
         texte.innerHTML = "Tu as fait un sans faute !<br>Tu es une vraie fan de pesto ! 🌟<br>Malheureusement tous les lots sont épuisés.<br>Retente ta chance lors de notre prochain concours !";
         afficherPopup();
         lancerConfettis();
+                lancerConfettis();
+                lancerConfettis();
       } else {
         titre.textContent = "Résultat";
-        texte.textContent = `Tu as ${totalQuestions - score} faute(s) sur ${totalQuestions} questions.`;
+        texte.textContent = `Tu as ${totalQuestions - score} faute(s) mais tu peux réessayer pour gagner ton poids en pesto !`;
         afficherPopup();
       }
     }
